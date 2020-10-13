@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css?family=Encode+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<title>Lights On</title>
+<script
+  src="https://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+  crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>
+  <style type="text/css">
+  	body {
+	background: black;
+}
+
+.container {
+	width: 600px;
+	height: 270px;
+	margin: 0 auto;
+	position:absolute;
+    top:50%;
+    left:50%;
+    margin-left:-300px;
+    margin-top:-135px;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 5px;
+	text-align: center;
+	font-family: 'Encode Sans', sans-serif;
+	font-weight: 100;
+}
+
+li {
+	display: inline-block;
+	font-size: 40px;
+	padding: 20px 40px;
+    background-color: #333;
+   
+}
+
+li:hover {
+	cursor: pointer;
+   
+}
+
+h1 {
+	text-align: center;
+	font-family: 'Encode Sans', sans-serif;
+    font-weight: bold;
+color: white;
+}
+
+p {
+	font-family: 'Encode Sans', sans-serif;
+	font-weight: 400;
+	text-align: center;
+	color: yellow;
+	position: absolute;
+	top: 80%;
+	left: 30%;
+}
+
+div {
+	text-align: center;
+}
+
+.start {
+	display: block;
+	margin: 0 auto;
+	cursor: pointer;
+	color: yellow;
+}
+
+.lights-off {
+	cursor: pointer;
+	display: none;
+}
+
+button {
+	color: white;
+	background-color: #333;
+	padding: 8px;
+	border-radius: 5px;
+	border: none;
+	
+  
+}
+
+button:focus { 
+	outline: none; 
+}
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>Lights On</h1>
+
+<ul>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+
+<br>
+<div class="button-cont">
+<button class="start">Turn the lights on</button>
+<button class="lights-off">Turn the lights back off</button>
+</div>
+<p id="dest"></p>
+
+</div>
+
+
+<script type="text/javascript">
+	const li = document.querySelectorAll("li");
+const h1 = document.getElementsByTagName("h1")[0];
+let button = document.getElementsByClassName("start")[0];
+let button2 = document.getElementsByClassName("lights-off")[0];
+let destination = document.getElementById("dest");
+
+
+$(".start").on("click", () => {
+  $(".start").fadeOut(1000);
+});
+
+run()
+
+button2.addEventListener("click", () => {
+	reset()
+	run()
+});
+
+function reset(){
+	document.body.style.background = "black";
+	h1.textContent = "Lights On";
+	h1.style.color = "white";
+	for(let i = 0; i < li.length; i++){
+		li[i].style.color = "black";
+	};
+	button2.style.display = "none";
+	button.style.display = "block";
+	hint.destroy();
+};
+
+function run(){
+button.addEventListener("click", () => {
+numbersOn()
+flash()
+
+function numbersOn(){
+setTimeout(() => {li[0].style.color = "yellow"}, 1000);
+setTimeout(() => {li[1].style.color = "yellow"}, 2000);
+setTimeout(() => {li[2].style.color = "yellow"}, 3000);
+setTimeout(() => {li[3].style.color = "yellow"}, 4000);
+setTimeout(() => {li[4].style.color = "yellow"}, 5000);
+};
+
+function flash(){
+setTimeout(() => {li[4].style.color = "black"}, 5500);
+setTimeout(() => {li[4].style.color = "yellow"}, 6000);
+setTimeout(() => {li[4].style.color = "black"}, 6100);
+setTimeout(() => {li[4].style.color = "yellow"}, 6200);
+setTimeout(() => {li[4].style.color = "black"}, 6300);
+}
+
+function flashRev(){
+setTimeout(() => {li[4].style.color = "yellow"}, 500);
+setTimeout(() => {li[4].style.color = "black"}, 600);
+setTimeout(() => {li[4].style.color = "yellow"}, 700);
+setTimeout(() => {li[4].style.color = "black"}, 800);
+setTimeout(() => {li[4].style.color = "yellow"}, 1800);
+
+setTimeout(() => {
+document.body.style.background = "white";
+h1.style.color = "#333";
+h1.textContent = "You did it!";
+button2.style.display = "block";
+button2.style.margin = "0 auto";
+}, 1800);
+}
+
+let hint = new TypeIt("#dest", {
+	startDelay: 8000,
+	speed: 50,
+	breaklines: true,
+	waitUntilVisible: true,
+	cursor: false,
+    strings: "Hmm, there seems to be a problem...",
+})
+.pause(900)
+.delete(null, {delay: 1000})
+.type("Try clicking on the number 5")
+.pause(1400)
+.delete(null, {delay: 2000})
+.go();
+
+setTimeout(() => {
+$("ul li:eq(4)").one('click', () => {
+flashRev(); 
+});
+}, 12000);
+
+});
+};
+</script>
+
+</body>
+</html>
